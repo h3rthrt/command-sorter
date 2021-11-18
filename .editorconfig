@@ -1,0 +1,9 @@
+root = true
+
+[*.sass]
+indent_style = space
+indent_size = 2
+
+[*.{tsx,ts,js}]
+indent_style = tab
+indent_size = 4
