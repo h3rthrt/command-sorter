@@ -9,11 +9,9 @@ import ruRU from 'antd/lib/locale/ru_RU'
 
 function render() {
 	ReactDOM.render(
-		<React.StrictMode>
-			<ConfigProvider locale={ruRU}>
-				<Main />
-			</ConfigProvider>
-		</React.StrictMode>, 
+		<ConfigProvider locale={ruRU}>
+			<Main />
+		</ConfigProvider>,
 	document.getElementById('root'))
 }
 
