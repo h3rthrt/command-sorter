@@ -7,7 +7,7 @@ interface I_AddForm {
 }
 
 const AddForm: FC<I_AddForm> = ({ handleCancel, handleOk }) => {
-	const [form] = Form.useForm()
+	// const [form] = Form.useForm()
 	
 	// const onCheck = async () => {
 	// 	try {
@@ -24,7 +24,7 @@ const AddForm: FC<I_AddForm> = ({ handleCancel, handleOk }) => {
 
 	return (
 		<Form
-			form={form}
+			// form={form}
 			onFinish={onFinish}
 			layout={'vertical'}
 			className="add-form"
