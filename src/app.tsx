@@ -14,7 +14,7 @@ function render() {
 				<Main />
 			</ConfigProvider>
 		</React.StrictMode>, 
-	document.body)
+	document.getElementById('root'))
 }
 
 render()
