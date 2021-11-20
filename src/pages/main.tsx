@@ -1,18 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Table } from 'antd'
 import ProjectLayout from '../layout'
-import team from '../data/team.json'
+import teamData from '../data/team.json'
+import { IPeoples } from '../types/peoples'
 
 const Main: FC = () => {
-	interface IPeoples {
-		name: string
-		ampula: string
-		goals: number
-		matches: number
+	const [data, setData] = useState<IPeoples[]>(teamData)
+	const removeFromData = (id: number) => {
+		setData(prevData => prevData.filter(item => item.id !== id ))
 	}
-
-	const data: IPeoples[] = team
-
 	const columns: any = [
 		{
 			title: 'Имя',
@@ -32,10 +28,20 @@ const Main: FC = () => {
 			title: 'Матчи',
 			dataIndex: 'matches',
 		},
+		{
+			title: 'Действие',
+			dataIndex: '',
+			key: 'x',
+			render: (item: IPeoples) => <a onClick={() => removeFromData(item.id)}>Удалить</a>,
+		},
 	]
 
+	const addToData = (people: IPeoples) => {
+		setData(prevData => [...prevData, people])
+	}
+
 	return (
-		<ProjectLayout>
+		<ProjectLayout addToData={(people: IPeoples) => addToData(people)} data={data}>
 			<Table
 				columns={columns}
 				dataSource={data}

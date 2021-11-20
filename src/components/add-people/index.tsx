@@ -1,16 +1,22 @@
 import React, { FC, useState } from 'react'
 import { Modal, Button } from 'antd'
-import AddForm from './AddForm'
+import AddForm from './add-form'
+import { IPeoples } from '../../types/peoples'
 
-const AddPeople: FC = () => {
+interface I_AddPeople {
+	addToData: (peoples: IPeoples) => void
+}
+
+const AddPeople: FC<I_AddPeople> = ({addToData}) => {
 	const [isModalVisible, setIsModalVisible] = useState(false)
 
 	const showModal = () => {
 		setIsModalVisible(true)
 	}
 
-	const handleOk = () => {
-		// setIsModalVisible(false)
+	const handleOk = (people: IPeoples) => {
+		addToData(people)
+		setIsModalVisible(false)
 	}
 
 	const handleCancel = () => {
@@ -31,9 +37,10 @@ const AddPeople: FC = () => {
 				centered
 				visible={isModalVisible}
 				footer={[]}
+				onCancel={handleCancel}
 			>
 				<AddForm
-					handleOk={() => handleOk()}
+					handleOk={(people: IPeoples) => handleOk(people)}
 					handleCancel={() => handleCancel()}
 				/>
 			</Modal>

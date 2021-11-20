@@ -5,6 +5,7 @@ module.exports = {
 	 */
 	entry: './src/index.ts',
 	// Put your normal webpack config below here
+	target: 'electron-renderer',
 	module: {
 		rules: require('./webpack.rules'),
 	},
