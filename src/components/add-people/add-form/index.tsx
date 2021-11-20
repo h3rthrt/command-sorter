@@ -1,27 +1,21 @@
 import React, { FC } from 'react'
 import { Form, Input, Select, InputNumber, Button } from 'antd'
 import { IPeoples } from '../../../types/peoples'
+import Team from '../../../store/team'
+import { observer } from 'mobx-react-lite'
 
 interface I_AddForm {
-	handleOk: (people: IPeoples) => void
+	handleOk: () => void
 	handleCancel: () => void
 }
 
-const AddForm: FC<I_AddForm> = ({ handleCancel, handleOk }) => {
+const AddForm: FC<I_AddForm> = observer(({ handleCancel, handleOk }) => {
 	const [form] = Form.useForm()
 
-	// const onCheck = async () => {
-	// 	try {
-	// 		const values = await form.validateFields()
-	// 		console.log('Success:', values)
-	// 	} catch (errorInfo) {
-	// 		console.log('Failed:', errorInfo)
-	// 	}
-	// }
-
 	const onFinish = (values: IPeoples) => {
-		values.id = Math.random()
-		handleOk(values)
+		values.id = Math.ceil(Math.random() * 100)
+		handleOk()
+		Team.addPeople(values)
 		form.resetFields()
 		console.log('Received values of form: ', values)
 	}
@@ -86,6 +80,6 @@ const AddForm: FC<I_AddForm> = ({ handleCancel, handleOk }) => {
 			</Form.Item>
 		</Form>
 	)
-}
+})
 
 export default AddForm

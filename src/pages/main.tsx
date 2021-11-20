@@ -1,14 +1,13 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { Table } from 'antd'
 import ProjectLayout from '../layout'
-import teamData from '../data/team.json'
 import { IPeoples } from '../types/peoples'
+import { observer } from 'mobx-react-lite'
+import Team from '../store/team'
+import { toJS } from 'mobx'
 
-const Main: FC = () => {
-	const [data, setData] = useState<IPeoples[]>(teamData)
-	const removeFromData = (id: number) => {
-		setData(prevData => prevData.filter(item => item.id !== id ))
-	}
+const Main: FC = observer(() => {
+
 	const columns: any = [
 		{
 			title: 'Имя',
@@ -32,25 +31,24 @@ const Main: FC = () => {
 			title: 'Действие',
 			dataIndex: '',
 			key: 'x',
-			render: (item: IPeoples) => <a onClick={() => removeFromData(item.id)}>Удалить</a>,
+			render: (item: IPeoples) => <a onClick={() => {
+				Team.removePeople(item.id)
+				console.log(toJS(Team))
+			}}>Удалить</a>,
 		},
 	]
 
-	const addToData = (people: IPeoples) => {
-		setData(prevData => [...prevData, people])
-	}
-
 	return (
-		<ProjectLayout addToData={(people: IPeoples) => addToData(people)} data={data}>
+		<ProjectLayout>
 			<Table
 				columns={columns}
-				dataSource={data}
+				dataSource={Team.team}
 				scroll={{ x: 'disable', y: 440 }}
 				pagination={false}
-				rowKey={obj => obj.name}
+				rowKey={obj => obj.id}
 			/>
 		</ProjectLayout>
 	)
-}
+})
 
 export default Main
